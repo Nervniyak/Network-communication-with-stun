@@ -34,6 +34,11 @@ namespace UDP_Listener
             try
             {
                 listeningSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+                //Прослушиваем по адресу
+                IPEndPoint localIP = new IPEndPoint(IPAddress.Any, localPort);
+                listeningSocket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
+                listeningSocket.Bind(localIP);
+
                 Task listeningTask = new Task(Listen);
                 listeningTask.Start();
 
@@ -84,10 +89,6 @@ namespace UDP_Listener
         {
             try
             {
-                //Прослушиваем по адресу
-                IPEndPoint localIP = new IPEndPoint(IPAddress.Any, localPort);
-                listeningSocket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
-                listeningSocket.Bind(localIP);
 
                 while (true)
                 {
