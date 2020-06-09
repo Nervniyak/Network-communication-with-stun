@@ -41,6 +41,7 @@ namespace UDP_Listener
 
                 Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
                 IPEndPoint bindEndPoint = new IPEndPoint(IPAddress.Any, 7777);
+                socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
                 socket.Bind(bindEndPoint);
 
                 while (true)
@@ -54,10 +55,6 @@ namespace UDP_Listener
                     socket.SendTo(data, new IPEndPoint(IPAddress.Parse(remoteAddress), remotePort));
 
 
-
-                    //byte[] data = Encoding.Unicode.GetBytes(message);
-                    //EndPoint remotePoint = new IPEndPoint(IPAddress.Parse(remoteAddress), remotePort);
-                    //listeningSocket.SendTo(data, remotePoint);
                 }
             }
             catch (Exception ex)
@@ -77,7 +74,7 @@ namespace UDP_Listener
             //IPEndPoint localIP = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 5555);
             //socket.Bind(localIP);
 
-            //byte[] data = new byte[256];
+            //byte[] data = new byte[4096];
 
             //EndPoint remoteIp = new IPEndPoint(IPAddress.Any, 0);
             //int bytes = socket.ReceiveFrom(data, ref remoteIp);
@@ -88,7 +85,8 @@ namespace UDP_Listener
             try
             {
                 //Прослушиваем по адресу
-                IPEndPoint localIP = new IPEndPoint(IPAddress.Parse("127.0.0.1"), localPort);
+                IPEndPoint localIP = new IPEndPoint(IPAddress.Any, localPort);
+                listeningSocket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
                 listeningSocket.Bind(localIP);
 
                 while (true)
@@ -96,7 +94,7 @@ namespace UDP_Listener
                     // получаем сообщение
                     StringBuilder builder = new StringBuilder();
                     int bytes = 0; // количество полученных байтов
-                    byte[] data = new byte[256]; // буфер для получаемых данных
+                    byte[] data = new byte[4096]; // буфер для получаемых данных
 
                     //адрес, с которого пришли данные
                     EndPoint remoteIp = new IPEndPoint(IPAddress.Any, 0);
