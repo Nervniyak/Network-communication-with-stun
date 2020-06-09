@@ -20,13 +20,13 @@ namespace UDP_Listener
             localPort = 7777;
 
             //remoteAddress = "37.17.16.42";
-            remoteAddress = "127.0.0.1";
-            remotePort = 7779;
+            remoteAddress = "192.168.0.107";
+            remotePort = 7777;
 
-            Console.Write("Введите порт для приема сообщений: ");
-            localPort = Int32.Parse(Console.ReadLine());
-            Console.Write("Введите порт для отправки сообщений: ");
-            remotePort = Int32.Parse(Console.ReadLine());
+            //Console.Write("Введите порт для приема сообщений: ");
+            //localPort = Int32.Parse(Console.ReadLine());
+            //Console.Write("Введите порт для отправки сообщений: ");
+            //remotePort = Int32.Parse(Console.ReadLine());
             //Console.WriteLine("Для отправки сообщений введите сообщение и нажмите Enter");
             //Console.WriteLine();
 
@@ -39,13 +39,25 @@ namespace UDP_Listener
 
                 //await listeningTask;
 
+                Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+                IPEndPoint bindEndPoint = new IPEndPoint(IPAddress.Any, 7777);
+                socket.Bind(bindEndPoint);
+
                 while (true)
                 {
                     string message = Console.ReadLine();
 
+
+
                     byte[] data = Encoding.Unicode.GetBytes(message);
-                    EndPoint remotePoint = new IPEndPoint(IPAddress.Parse(remoteAddress), remotePort);
-                    listeningSocket.SendTo(data, remotePoint);
+
+                    socket.SendTo(data, new IPEndPoint(IPAddress.Parse(remoteAddress), remotePort));
+
+
+
+                    //byte[] data = Encoding.Unicode.GetBytes(message);
+                    //EndPoint remotePoint = new IPEndPoint(IPAddress.Parse(remoteAddress), remotePort);
+                    //listeningSocket.SendTo(data, remotePoint);
                 }
             }
             catch (Exception ex)
