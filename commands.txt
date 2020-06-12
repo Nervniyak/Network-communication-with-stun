@@ -1,0 +1,5 @@
+./stunclient --protocol udp --mode behavior --localport 7770 stun.stunprotocol.org 3478
+./stunclient --protocol tcp --mode behavior --localport 7770 stun.stunprotocol.org 3478
+
+
+./stunclient --protocol tcp --mode behavior --localport 7770 18.219.110.18 3478
