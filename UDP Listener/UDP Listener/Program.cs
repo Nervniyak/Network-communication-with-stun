@@ -19,8 +19,8 @@ namespace UDP_Listener
         {
             localPort = 7777;
 
-            //remoteAddress = "37.17.16.42";
-            remoteAddress = "192.168.0.107";
+            remoteAddress = "37.17.16.42";
+            //remoteAddress = "192.168.0.107";
             remotePort = 7777;
 
             //Console.Write("Введите порт для приема сообщений: ");
